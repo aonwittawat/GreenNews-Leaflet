@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Green News Map</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="ศูนย์กลางข่าวสารด้านสิ่งแวดล้อม greennews.agency | สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม - สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย" />
+    <link rel='shortcut icon' type='image/x-icon' href='images/favicons.ico' />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="css/leaflet.zoomhome.css"/>
+    <link rel="stylesheet" href="css/leaflet.marker.highlight.css">
+    <link rel="stylesheet" href="css/leaflet-logo.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- optionally define the sidebar content via HTML markup -->
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+
+        <!-- nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <!-- top aligned tabs -->
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
+             <!--   <li><a href="#autopan" role="tab"><i class="fa fa-arrows"></i></a></li> -->
+            </ul>
+
+            <!-- bottom aligned tabs -->
+            <ul role="tablist">
+                <li><a href="https://greennews.agency/"><i class="fa fa-info-circle" title="Go to GreenNews website"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- panel content -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                    สำนักข่าวสิ่งแวดล้อม (GreenNews)
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+                </h1>
+
+                <h3 id="title">คลิกบนแผนที่เพื่อเลือกดูรายละเอียดข่าวที่สนใจ</h3>
+                <p class="lorem" id="details"></p>
+                <p>
+                    <img id="image" src="images/greennews-logo75x75.jpg">
+                </p>
+                <p class="lorem" id="datePost"></p>
+                <p>
+                    <a href="https://greennews.agency" id="link" target="_blank">
+                        อ่านเพิ่มเติม
+                        <i class="fa fa-external-link" aria-hidden="true"></i>
+                    </a>
+                </p>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://greennews.agency" target="_blank" title="Share on Facebook" id="facebook">
+                    <i class="fa fa-facebook-square" title="Share on Facebook" style="font-size:36px">&nbsp;</i>
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=Check+out+@greennewsagency%2C&amp;url=https://greennews.agency/" target="_blank" title="Tweet" id="twitter">
+                    <i class="fa fa-twitter-square" title="Tweet" style="font-size:36px"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+    
+    <!-- Load Leaflet from CDN -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@3.0.7/dist/esri-leaflet.js"
+        integrity="sha512-ciMHuVIB6ijbjTyEdmy1lfLtBwt0tEHZGhKVXDzW7v7hXOe+Fo3UA1zfydjCLZ0/vLacHkwSARXB5DmtNaoL/g=="
+        crossorigin=""></script>
+
+    <!-- Load Esri Leaflet Vector from CDN -->
+    <script src="https://unpkg.com/esri-leaflet-vector@3.1.2/dist/esri-leaflet-vector.js"
+        integrity="sha512-SnA/TobYvMdLwGPv48bsO+9ROk7kqKu/tI9TelKQsDe+KZL0TUUWml56TZIMGcpHcVctpaU6Mz4bvboUQDuU3w=="
+        crossorigin=""></script>    
+
+    
+    <script src="js/leaflet-sidebar.js"></script>
+    <script src="js/leaflet.zoomhome.min.js"></script>
+    <script src="js/leaflet.marker.highlight.js"></script>
+    <script src="js/leaflet-logo.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
