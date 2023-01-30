@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Green News Map</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <meta name="description" content="ศูนย์กลางข่าวสารด้านสิ่งแวดล้อม greennews.agency | สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม - สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย" />
     <link rel='shortcut icon' type='image/x-icon' href='images/favicons.ico' />
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin=""/>
 
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@3.0.10/dist/esri-leaflet.js"></script>       
+
     <link rel="stylesheet" href="css/leaflet-sidebar.css" />
     <link rel="stylesheet" href="css/leaflet.zoomhome.css"/>
     <link rel="stylesheet" href="css/leaflet.marker.highlight.css">
@@ -30,7 +32,6 @@
             <!-- top aligned tabs -->
             <ul role="tablist">
                 <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
-             <!--   <li><a href="#autopan" role="tab"><i class="fa fa-arrows"></i></a></li> -->
             </ul>
 
             <!-- bottom aligned tabs -->
@@ -70,22 +71,6 @@
     </div>
 
     <div id="map"></div>
-    
-    <!-- Load Leaflet from CDN -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@3.0.7/dist/esri-leaflet.js"
-        integrity="sha512-ciMHuVIB6ijbjTyEdmy1lfLtBwt0tEHZGhKVXDzW7v7hXOe+Fo3UA1zfydjCLZ0/vLacHkwSARXB5DmtNaoL/g=="
-        crossorigin=""></script>
-
-    <!-- Load Esri Leaflet Vector from CDN -->
-    <script src="https://unpkg.com/esri-leaflet-vector@3.1.2/dist/esri-leaflet-vector.js"
-        integrity="sha512-SnA/TobYvMdLwGPv48bsO+9ROk7kqKu/tI9TelKQsDe+KZL0TUUWml56TZIMGcpHcVctpaU6Mz4bvboUQDuU3w=="
-        crossorigin=""></script>    
-
     
     <script src="js/leaflet-sidebar.js"></script>
     <script src="js/leaflet.zoomhome.min.js"></script>

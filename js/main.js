@@ -1,44 +1,31 @@
 // BASEMAP LAYERS
-var gray = L.layerGroup();
-    L.esri.basemapLayer("Gray").addTo(gray);
-    L.esri.basemapLayer("GrayLabels").addTo(gray);
-
-var imagery = L.layerGroup();
-    L.esri.basemapLayer('Imagery',{
-        detectRetina: true
-    }).addTo(imagery);
-    L.esri.basemapLayer('ImageryLabels',{
-        detectRetina: true
-    }).addTo(imagery);
-
-var street = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiZXNyaTUwOTUiLCJhIjoiY2tmdDVlMTFoMHN6MTJzbXp4MXRvcTJkdSJ9.zcBuvjIov_A9NFWrJrPN_w'
+const Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',{
+    attribution: '&copy; <a href="https://carto.com">CARTO</a>'
+});
+const Hybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
+    attribution: '&copy; <a href="https://www.google.com/">Google</a>'
+});
+const OpenStreetMap = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 });
 
-var baseLayers = {
-    พื้นฐาน: gray,
-    ภาพดาวเทียม: imagery,
-    เส้นถนน: street
+const baseLayers = {
+    พื้นฐาน: Carto,
+    ภาพดาวเทียม: Hybrid,
+    เส้นถนน: OpenStreetMap
 };
 
 // Disaster
-var iconDisaster = L.icon({
+const iconDisaster = L.icon({
     iconUrl: 'images/icons/Disaster_and_climate_change.png',
     iconSize: [25,25]
 });
 
-var Disaster = L.esri.featureLayer({
-    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Disaster_and_climate_change/FeatureServer/0',
-    where: "CATEGORY = 'DISASTER'",
+const Disaster = L.esri.featureLayer({
+    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/DISASTER/FeatureServer/0',
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    console.log(geojson.properties.CATEGORY);
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconDisaster
     });
@@ -52,7 +39,7 @@ Disaster.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -60,17 +47,16 @@ Disaster.bindPopup(function (layer) {
 });
 
 // Ecology
-var iconEcology = L.icon({
+const iconEcology = L.icon({
     iconUrl: 'images/icons/Ecology.png',
     iconSize: [25,25]
 });
 
-var Ecology = L.esri.featureLayer({
+const Ecology = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Ecology/FeatureServer/0',
-    where: "CATEGORY = 'Ecology'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconEcology
     });
@@ -84,7 +70,7 @@ Ecology.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -92,17 +78,16 @@ Ecology.bindPopup(function (layer) {
 });
 
 // Water and Ocean
-var iconOcean = L.icon({
+const iconOcean = L.icon({
     iconUrl: 'images/icons/Water_and_Ocean.png',
     iconSize: [25,25]
 });
 
-var Ocean = L.esri.featureLayer({
-    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Water_and_Ocean/FeatureServer/0',
+const Ocean = L.esri.featureLayer({
+    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/WATER_AND_OCEAN/FeatureServer/0',
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
-    where: "CATEGORY = 'WATER AND OCEAN'",
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconOcean
     });
@@ -116,7 +101,7 @@ Ocean.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -124,17 +109,16 @@ Ocean.bindPopup(function (layer) {
 });
 
 // Forest and Wildlife
-var iconForest = L.icon({
+const iconForest = L.icon({
     iconUrl: 'images/icons/Forest_and_Wildlife.png',
     iconSize: [25,25]
 });
 
-var Forest = L.esri.featureLayer({
-    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Forest_and_Wildlife/FeatureServer/0',
-    where: "CATEGORY = 'FOREST AND WILDIFE'",
+const Forest = L.esri.featureLayer({
+    url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/FOREST_AND_WILDIFE/FeatureServer/0',
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconForest
     });
@@ -148,7 +132,7 @@ Forest.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -156,17 +140,16 @@ Forest.bindPopup(function (layer) {
 });
 
 // Urban
-var iconUrban = L.icon({
+const iconUrban = L.icon({
     iconUrl: 'images/icons/Urban.png',
     iconSize: [25,25]
 });
 
-var Urban = L.esri.featureLayer({
+const Urban = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Urban/FeatureServer/0',
-    where: "CATEGORY = 'Urban'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconUrban
     });
@@ -180,7 +163,7 @@ Urban.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -188,17 +171,16 @@ Urban.bindPopup(function (layer) {
 });  
 
 // Right
-var iconRight = L.icon({
+const iconRight = L.icon({
     iconUrl: 'images/icons/Right.png',
     iconSize: [25,25]
 });
 
-var Right = L.esri.featureLayer({
+const Right = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Right/FeatureServer/0',
-    where: "CATEGORY = 'Right'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconRight
     });
@@ -212,7 +194,7 @@ Right.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -220,17 +202,16 @@ Right.bindPopup(function (layer) {
 });  
 
 // Energy
-var iconEnergy = L.icon({
+const iconEnergy = L.icon({
     iconUrl: 'images/icons/Energy.png',
     iconSize: [25,25]
 });
 
-var Energy = L.esri.featureLayer({
+const Energy = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Energy/FeatureServer/0',
-    where: "CATEGORY = 'Energy'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconEnergy
     });
@@ -244,7 +225,7 @@ Energy.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -252,17 +233,16 @@ Energy.bindPopup(function (layer) {
 });  
 
 // Food and Agriculture
-var iconFood = L.icon({
+const iconFood = L.icon({
     iconUrl: 'images/icons/Food_and_Agriculture.png',
     iconSize: [25,25]
 });
 
-var Food = L.esri.featureLayer({
+const Food = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Food_and_Agriculture/FeatureServer/0',
-    where: "CATEGORY = 'Food and Agriculture'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconFood
     });
@@ -276,7 +256,7 @@ Food.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -284,17 +264,16 @@ Food.bindPopup(function (layer) {
 });  
 
 // Industrial
-var iconIndustrial = L.icon({
+const iconIndustrial = L.icon({
     iconUrl: 'images/icons/Industrial.png',
     iconSize: [25,25]
 });
 
-var Industrial = L.esri.featureLayer({
+const Industrial = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Industrial/FeatureServer/0',
-    where: "CATEGORY = 'Industrial'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconIndustrial
     });
@@ -308,7 +287,7 @@ Industrial.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -316,17 +295,16 @@ Industrial.bindPopup(function (layer) {
 });  
 
 // Pollution and waste
-var iconPollution = L.icon({
+const iconPollution = L.icon({
     iconUrl: 'images/icons/Pollution_and_waste.png',
     iconSize: [25,25]
 });
 
-var Pollution = L.esri.featureLayer({
+const Pollution = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Pollution_and_waste/FeatureServer/0',
-    where: "CATEGORY = 'Pollution and waste'",
-    attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
+    attribution: '&copy; 2022 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconPollution
     });
@@ -340,7 +318,7 @@ Pollution.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
@@ -348,17 +326,16 @@ Pollution.bindPopup(function (layer) {
 });  
 
 // Mining
-var iconMining = L.icon({
+const iconMining = L.icon({
     iconUrl: 'images/icons/Mining.png',
     iconSize: [25,25]
 });
 
-var Mining = L.esri.featureLayer({
+const Mining = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/60ZyqBuk6DAAkHuh/ArcGIS/rest/services/Mining/FeatureServer/0',
-    where: "CATEGORY = 'Mining'",
     attribution: '&copy; 2020 สำนักข่าวสิ่งแวดล้อม โดยชมรมนักข่าวสิ่งแวดล้อม | สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย <a href="https://greennews.agency/">(GreenNews)</a>',
     pointToLayer: function (geojson, latlng) {
-    var GeoJSON = L.marker(latlng,{
+    const GeoJSON = L.marker(latlng,{
         highlight: "temporary",
         icon: iconMining
     });
@@ -372,14 +349,14 @@ Mining.bindPopup(function (layer) {
     document.getElementById("image").src = layer.feature.properties.IMAGE;
     document.getElementById("link").href = layer.feature.properties.LINK;
 
-    var date = new Date(layer.feature.properties.DATE);
+    const date = new Date(layer.feature.properties.DATE);
     document.getElementById("datePost").innerHTML = date.toLocaleDateString();
     
     sidebar.open('home');
     return L.Util.template('<p>{TITLE}</p>', layer.feature.properties);
 });               
 
-var overlays = {
+const overlays = {
     'ภัยพิบัติและการเปลี่ยนแปลงสภาพภูมิอากาศ': Disaster,
     'ระบบนิเวศ': Ecology,
     'น้ำและมหาสมุทร': Ocean,
@@ -394,9 +371,9 @@ var overlays = {
 };
 
 // standard leaflet map setup
-var map = L.map('map',{
+const map = L.map('map',{
     center: [13.769469, 100.534175],
-    zoom: 7,
+    zoom: 6,
     layers: [
         Disaster,
         Ecology,
@@ -409,7 +386,7 @@ var map = L.map('map',{
         Industrial,
         Pollution,
         Mining,
-        gray
+        Carto
         ],
     zoomControl: false
 });
@@ -425,7 +402,7 @@ map.on('click', function () {
 L.control.layers(baseLayers, overlays).addTo(map);
 
 // add home and zoom
-var zoomHome = L.Control.zoomHome();
+const zoomHome = L.Control.zoomHome();
 zoomHome.addTo(map);
 
 // add logo
@@ -439,27 +416,6 @@ L.control.logo({
 }).addTo(map); 
 
 // create the sidebar instance and add it to the map
-var sidebar = L.control.sidebar({ container: 'sidebar', position: "right"})
+const sidebar = L.control.sidebar({ container: 'sidebar', position: "right"})
     .addTo(map);
     //.open('home');
-
-// be notified when a panel is opened
-sidebar.on('content', function (ev) {
-    switch (ev.id) {
-        case 'autopan':
-        sidebar.options.autopan = true;
-        break;
-        default:
-        sidebar.options.autopan = false;
-    }
-});
-
-var userid = 0
-function addUser() {
-    sidebar.addPanel({
-        id:   'user' + userid++,
-        tab:  '<i class="fa fa-user"></i>',
-        title: 'User Profile ' + userid,
-        pane: '<p>user ipsum dolor sit amet</p>',
-    });
-}
